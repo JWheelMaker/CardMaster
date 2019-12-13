@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=BoxGUI2
+comment0.text=\r\n\r\n\ Beschreibung\r\n\r\n\ @version\ 1.0\ vom\ 12.12.2019\r\n\ @author\ \r\n
+comment1.params=
+comment1.target=BoxGUI2()
+comment2.params=evt
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment3.params=evt
+comment3.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment4.params=args
+comment4.target=void\ main(java.lang.String[])
+comment5.params=evt
+comment5.target=void\ jButton1_ActionPerformed(java.awt.event.ActionEvent)
+comment6.params=evt
+comment6.target=void\ jButton2_ActionPerformed(java.awt.event.ActionEvent)
+numComments=7

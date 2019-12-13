@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Karte
+comment0.text=\r\n\ @RE\ Enterprise\ Inc.\r\n\ @a0.1\r\n
+comment1.params=pFrage\ pAntwort
+comment1.target=Karte(java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getFrage()
+comment3.params=
+comment3.target=java.lang.String\ getAntwort()
+numComments=4
