@@ -15,7 +15,8 @@ public class Karteikasten
     public Queue <Karte> box3 = new Queue();
     public Queue <Karte> box4 = new Queue();
     public Stack <Karte> archiv = new Stack();
-    // Attribute
+    private int boxnummer;
+    private Karte karte;
 
     // Konstruktor
     public Karteikasten()
@@ -25,29 +26,35 @@ public class Karteikasten
 
     // Dienste
     public void addCard(int pBoxnummer, Karte pKarte) {
-        int boxnummer = pBoxnummer;
-        Karte karte = pKarte;
+        boxnummer = pBoxnummer;
+        karte = pKarte;
         switch (boxnummer) {
-            case(1): box1.enqueue(karte); break;
+            case(1): box1.enqueue(karte); save(1, karte); break;
             case(2): box2.enqueue(karte); break;
             case(3): box3.enqueue(karte); break;
             case(4): box4.enqueue(karte); break;
         }
     }
 
-    public static void save() {
-        FileWriter writer;
-        File datei = new File("saves/save.txt");
-
+    public void save(int boxnummer, Karte karte) {
         try {
-            writer = new FileWriter(datei, true);
-            writer.write("Ich bin eine Datei!\n");
-            writer.write("HAllo");
-            writer.write("Test");
-            writer.flush();
-            writer.close();
+            File b1Save = new File("saves/box1.txt");
+            File b2Save = new File("saves/box2.txt");
+            File b3Save = new File("saves/box3.txt");
+            File b4Save = new File("saves/box4.txt");
+            File archivSave = new File("saves/archiv.txt");
+            FileWriter writer1 = new FileWriter(b1Save);
+            FileWriter writer2 = new FileWriter(b2Save);
+            FileWriter writer3 = new FileWriter(b3Save);
+            FileWriter writer4 = new FileWriter(b4Save);
+            FileWriter writer5 = new FileWriter(archivSave);
 
-            //anwenden für karten speichern
+            switch (boxnummer) {
+                case(1): writer1.write(karte.getFrage() + "\n" + karte.getAntwort() + "\n"); break;
+                case(2): writer2.write(karte.getFrage() + "\n" + karte.getAntwort() + "\n"); break;
+                case(3): writer3.write(karte.getFrage() + "\n" + karte.getAntwort() + "\n"); break;
+                case(4): writer4.write(karte.getFrage() + "\n" + karte.getAntwort() + "\n"); break;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,15 +62,23 @@ public class Karteikasten
 
     public static void load() {
         try {
-            File datei = new File("saves/save.txt");
-            Scanner scanner = new Scanner(datei);
+            File b1Save = new File("saves/box1.txt");
+            File b2Save = new File("saves/box2.txt");
+            File b3Save = new File("saves/box3.txt");
+            File b4Save = new File("saves/box4.txt");
+            File archivSave = new File("saves/archiv.txt");
+            Scanner scanner1 = new Scanner(b1Save);
+            Scanner scanner2 = new Scanner(b2Save);
+            Scanner scanner3 = new Scanner(b3Save);
+            Scanner scanner4 = new Scanner(b4Save);
+            Scanner scanner5 = new Scanner(archivSave);
 
-            while(scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                System.out.println(line);
-                System.out.println(" (" + line.length() + ")");
+            while(scanner1.hasNextLine()) {
+                String lineFrage = scanner1.nextLine();
+                String lineAntwort = scanner1.nextLine();
+                box1.enqueue(new Karte(lineFrage, lineAntwort));
             }
-            
+
             scanner.close();
 
         } catch(FileNotFoundException e) {

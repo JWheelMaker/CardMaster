@@ -31,6 +31,7 @@ public class BoxGUI1 extends JFrame {
   public BoxGUI1() { 
     // Frame-Initialisierung
     super();
+    
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 1000; 
     int frameHeight = 500;
