@@ -2,8 +2,10 @@
 comment0.target=Karteikasten
 comment1.params=
 comment1.target=Karteikasten()
-comment2.params=pBoxnummer\ pKarte
-comment2.target=void\ addKarte(int,\ Karte)
+comment2.params=pFrage\ pAntwort
+comment2.target=void\ addKarte(java.lang.String,\ java.lang.String)
 comment3.params=
 comment3.target=void\ save()
-numComments=4
+comment4.params=
+comment4.target=void\ load()
+numComments=5
