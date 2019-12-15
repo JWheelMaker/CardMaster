@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Karteikasten
+comment0.text=\r\n\ @RE\ Enterprise\ Inc.\r\n\ @a0.1\r\n
+comment1.params=
+comment1.target=Karteikasten()
+comment2.params=pBoxnummer\ pKarte
+comment2.target=void\ addCard(int,\ Karte)
+comment3.params=pAnswerUser
+comment3.target=void\ controlAnswer(java.lang.String)
+comment4.params=
+comment4.target=void\ length()
+comment5.params=pBoxnummer
+comment5.target=void\ setBoxnummer(int)
+comment6.params=
+comment6.target=void\ question()
+comment7.params=
+comment7.target=java.lang.String\ getQ()
+numComments=8
