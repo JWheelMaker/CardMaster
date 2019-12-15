@@ -185,10 +185,11 @@ public class Karteikasten
     {
         String answerUser=pAnswerUser;
         int boxnummer = pBoxnummer;
+        String answer = box1.front().getAntwort();
         switch (boxnummer)
         {
             case (1) :
-            if (answerUser == box1.front().getAntwort())
+            if (answerUser.equals(box1.front().getAntwort()))
             { JOptionPane.showMessageDialog(null, "Richtig");
                 box2.enqueue(box1.front());
                 box1.dequeue();
@@ -200,7 +201,7 @@ public class Karteikasten
             }
             break;
             case (2) :
-            if (answerUser==box2.front().getAntwort())
+            if (answerUser.equals(box2.front().getAntwort()))
             { JOptionPane.showMessageDialog(null, "Richtig");
                 box3.enqueue(box2.front());
                 box2.dequeue();
@@ -212,7 +213,7 @@ public class Karteikasten
             }
             break;
             case (3) :
-            if (answerUser==box3.front().getAntwort())
+            if (answerUser.equals(box3.front().getAntwort()))
             { JOptionPane.showMessageDialog(null, "Richtig");
                 box4.enqueue(box3.front());
                 box3.dequeue();
@@ -224,7 +225,7 @@ public class Karteikasten
             }
             break;
             case (4) :
-            if (answerUser==box4.front().getAntwort())
+            if (answerUser.equals(box4.front().getAntwort()))
             { JOptionPane.showMessageDialog(null, "Richtig");
                 archiv.push(box4.front());
                 box4.dequeue();
@@ -242,6 +243,7 @@ public class Karteikasten
     {
         if (!box1.isEmpty())
         {
+            zaehler1 = 0;
             while(!box1.isEmpty())
             { zaehler1=zaehler1+1;
                 zaehlen.enqueue(box1.front());
@@ -255,6 +257,7 @@ public class Karteikasten
         }
         if (!box2.isEmpty())
         {
+            zaehler2 = 0;
             while(!box2.isEmpty())
             { zaehler2=zaehler2+1;
                 zaehlen.enqueue(box2.front());
@@ -268,6 +271,7 @@ public class Karteikasten
         }
         if (!box1.isEmpty())
         {
+            zaehler3 = 0;
             while(!box3.isEmpty())
             { zaehler3=zaehler3+1;
                 zaehlen.enqueue(box3.front());
@@ -281,6 +285,7 @@ public class Karteikasten
         }
         if (!box4.isEmpty())
         {
+            zaehler4 = 0;
             while(!box4.isEmpty())
             { zaehler4=zaehler4+1;
                 zaehlen.enqueue(box4.front());
@@ -290,16 +295,16 @@ public class Karteikasten
             { box4.enqueue(zaehlen.front());
                 zaehlen.dequeue();
             }
-            
+
         }
         int wantedZaehler = 0;
         switch(pBoxnummer) {
-                case(1): wantedZaehler = zaehler1; break;
-                case(2): wantedZaehler = zaehler2; break;
-                case(3): wantedZaehler = zaehler3; break;
-                case(4): wantedZaehler = zaehler4; break;
-            }
-            return wantedZaehler;
+            case(1): wantedZaehler = zaehler1; break;
+            case(2): wantedZaehler = zaehler2; break;
+            case(3): wantedZaehler = zaehler3; break;
+            case(4): wantedZaehler = zaehler4; break;
+        }
+        return wantedZaehler;
     }
 
     private class KastenGUI extends JFrame {
@@ -312,6 +317,11 @@ public class Karteikasten
         private JButton jButton4 = new JButton();
         private JButton jButton5 = new JButton();
         private JSeparator jSeparator3 = new JSeparator();
+
+        private JLabel jLabel3 = new JLabel();
+        private JLabel jLabel4 = new JLabel();
+        private JLabel jLabel5 = new JLabel();
+        private JLabel jLabel6 = new JLabel();
 
         // Ende Attribute
 
@@ -385,6 +395,23 @@ public class Karteikasten
             cp.add(jButton5);
             jSeparator3.setBounds(24, 440, 953, 9);
             cp.add(jSeparator3);
+
+            jLabel3.setBounds(125, 400, 105, 49);
+            jLabel3.setText("" + length(1));
+            cp.add(jLabel3);
+
+            jLabel4.setBounds(310, 400, 105, 49);
+            jLabel4.setText("" + length(2));
+            cp.add(jLabel4);
+
+            jLabel5.setBounds(500, 400, 105, 49);
+            jLabel5.setText("" + length(3));
+            cp.add(jLabel5);
+
+            jLabel6.setBounds(680, 400, 105, 49);
+            jLabel6.setText("" + length(4));
+            cp.add(jLabel6);
+
             // Ende Komponenten
 
             setVisible(true);
