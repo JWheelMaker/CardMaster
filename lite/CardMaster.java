@@ -9,4 +9,12 @@ public class CardMaster
     {
         
     }
+    
+    public void savetest() {
+        kk.save();
+    }
+    
+    public void loadtest() {
+        kk.load();
+    }
 }
