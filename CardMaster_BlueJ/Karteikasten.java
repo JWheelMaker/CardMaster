@@ -27,7 +27,6 @@ public class Karteikasten
 
     public String textLabel10;
 
-
     public Karteikasten()
     {
         new KastenGUI();
@@ -302,20 +301,6 @@ public class Karteikasten
 
         } else {zaehler4 = 0;}
 
-        if (!archiv.isEmpty())
-        {
-            zaehler5 = 0;
-            while(!archiv.isEmpty())
-            { zaehler5=zaehler5+1;
-                zaehlenStack.push(archiv.top());
-                archiv.pop();
-            }
-            while(!zaehlen.isEmpty())
-            { archiv.push(zaehlenStack.top());
-                zaehlenStack.pop();
-            }
-
-        } else {zaehler5 = 0;}
 
         int wantedZaehler = 0;
         switch(pBoxnummer) {
@@ -323,9 +308,27 @@ public class Karteikasten
             case(2): wantedZaehler = zaehler2; break;
             case(3): wantedZaehler = zaehler3; break;
             case(4): wantedZaehler = zaehler4; break;
-            case(5): wantedZaehler = zaehler5; break;
         }
         return wantedZaehler;
+    }
+
+    public void archivAusgeben() {
+        int i = 1;
+        out("Folgende Karten leigen bereits im Archiv (Frage/Antwort)");
+        out("");
+        while(!archiv.isEmpty()) {
+            zaehlenStack.push(archiv.top());
+            archiv.pop();
+        }
+        while(!zaehlenStack.isEmpty()){
+            System.out.print(i + ". " + zaehlenStack.top().getFrage());
+            out(" " + zaehlenStack.top().getAntwort());
+
+            archiv.push(zaehlenStack.top());
+            zaehlenStack.pop();
+            
+            i += 1;
+        }
     }
 
     private class KastenGUI extends JFrame {
@@ -343,7 +346,6 @@ public class Karteikasten
         private JLabel jLabel4 = new JLabel();
         private JLabel jLabel5 = new JLabel();
         private JLabel jLabel6 = new JLabel();
-        private JLabel jLabel7 = new JLabel();
 
         // Ende Attribute
 
@@ -434,10 +436,6 @@ public class Karteikasten
             jLabel6.setText("" + length(4));
             cp.add(jLabel6);
 
-            jLabel7.setBounds(860, 400, 105, 49);
-            jLabel7.setText("" + length(5));
-            cp.add(jLabel7);
-
             // Ende Komponenten
 
             setVisible(true);
@@ -466,8 +464,7 @@ public class Karteikasten
         } // end of jButton4_ActionPerformed
 
         public void jButton5_ActionPerformed(ActionEvent evt) {
-            // TODO hier Quelltext einfügen
-
+            archivAusgeben();
         } // end of jButton5_ActionPerformed
 
         // Ende Methoden
@@ -584,7 +581,7 @@ public class Karteikasten
                 });
             cp.add(jButton4);
 
-            jLabel10.setBounds(500, 170, 110, 70);
+            jLabel10.setBounds(500, 80, 200, 200);
             jLabel10.setText("");
             cp.add(jLabel10);
 
@@ -617,26 +614,35 @@ public class Karteikasten
             }
         } // end of jButton1_ActionPerformed
         public void jButton2_ActionPerformed(ActionEvent evt) {
-            controlAnswer(boxnummer, jTextField3.getText());
-            jLabel10.setText(textLabel10);
+            switch(boxnummer) {
+                case(1): if(!box1.isEmpty()) {controlAnswer(boxnummer, jTextField3.getText()); jLabel10.setText(textLabel10); break;}
+                else {jLabel10.setText("Box " + boxnummer + " ist leer!"); } break;
+                case(2): if(!box2.isEmpty()) {controlAnswer(boxnummer, jTextField3.getText()); jLabel10.setText(textLabel10); break;}
+                else {jLabel10.setText("Box " + boxnummer + " ist leer!"); } break;
+                case(3): if(!box3.isEmpty()) {controlAnswer(boxnummer, jTextField3.getText()); jLabel10.setText(textLabel10); break;}
+                else {jLabel10.setText("Box " + boxnummer + " ist leer!"); } break;
+                case(4): if(!box4.isEmpty()) {controlAnswer(boxnummer, jTextField3.getText()); jLabel10.setText(textLabel10); break;}
+                else {jLabel10.setText("Box " + boxnummer + " ist leer!"); } break;
+            }
             jTextField3.setText("");
         } // end of jButton2_ActionPerformed
 
         public void jButton3_ActionPerformed(ActionEvent evt) {
             switch(boxnummer) {
                 case(1): if(!box1.isEmpty()) {jLabel11.setText(box1.front().getFrage()); break;}
-                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); }
+                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); } break;
                 case(2): if(!box2.isEmpty()) {jLabel11.setText(box2.front().getFrage()); break;}
-                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); }
+                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); } break;
                 case(3): if(!box3.isEmpty()) {jLabel11.setText(box3.front().getFrage()); break;}
-                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); }
+                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); } break;
                 case(4): if(!box4.isEmpty()) {jLabel11.setText(box4.front().getFrage()); break;}
-                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); }
+                else {jLabel11.setText("Box " + boxnummer + " ist leer!"); } break;
             }
         } // end of jButton2_ActionPerformed
 
         public void jButton4_ActionPerformed(ActionEvent evt) {
             setVisible(false);
+            new KastenGUI();
         } // end of jButton2_ActionPerformed
         // Ende Methoden
     } // end of class BoxGUI1
