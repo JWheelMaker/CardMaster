@@ -3,10 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 public class Karteikasten
 {
     private Queue <Karte> box1 = new Queue();
@@ -37,151 +41,237 @@ public class Karteikasten
     }
 
     public void save() {
-        //nur am Ende ausführen, leert alle Boxen!!
-        File b1save = new File("saves/box1.txt");
-        File b2save = new File("saves/box2.txt");
-        File b3save = new File("saves/box3.txt");
-        File b4save = new File("saves/box4.txt");
-        File arSave = new File("saves/archiv.txt");
-
+        PrintWriter pw = null;
         try {
-            FileWriter writer1 = new FileWriter(b1save);
-
+            pw = new PrintWriter(new BufferedWriter(new FileWriter("saves/box1.txt")));
             while(!box1.isEmpty()) {
-                writer1.write(box1.front().getFrage() + "\n");
-                writer1.write("Hallo Testib");
-                writer1.write(box1.front().getAntwort() + "\n");
+                pw.println(box1.front().getFrage());
+                pw.println(box1.front().getAntwort());
+
+                zaehlen.enqueue(box1.front());
                 box1.dequeue();
             }
 
-        } catch(IOException e) {
-            e.printStackTrace();
+            while(!zaehlen.isEmpty()) {
+                box1.enqueue(zaehlen.front());
+                zaehlen.dequeue();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (pw != null){
+                pw.flush();
+                pw.close();
+            }
         }
 
         try {
-            FileWriter writer2 = new FileWriter(b2save);
-
+            pw = new PrintWriter(new BufferedWriter(new FileWriter("saves/box2.txt")));
             while(!box2.isEmpty()) {
-                writer2.write(box2.front().getFrage() + "\n");
-                writer2.write(box2.front().getAntwort() + "\n");
+                pw.println(box2.front().getFrage());
+                pw.println(box2.front().getAntwort());
+
+                zaehlen.enqueue(box2.front());
                 box2.dequeue();
             }
 
-        } catch(IOException e) {
-            e.printStackTrace();
+            while(!zaehlen.isEmpty()) {
+                box2.enqueue(zaehlen.front());
+                zaehlen.dequeue();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (pw != null){
+                pw.flush();
+                pw.close();
+            }
         }
 
         try {
-            FileWriter writer3 = new FileWriter(b3save);
-
+            pw = new PrintWriter(new BufferedWriter(new FileWriter("saves/box3.txt")));
             while(!box3.isEmpty()) {
-                writer3.write(box3.front().getFrage() + "\n");
-                writer3.write(box3.front().getAntwort() + "\n");
+                pw.println(box3.front().getFrage());
+                pw.println(box3.front().getAntwort());
+
+                zaehlen.enqueue(box3.front());
                 box3.dequeue();
             }
 
-        } catch(IOException e) {
-            e.printStackTrace();
+            while(!zaehlen.isEmpty()) {
+                box3.enqueue(zaehlen.front());
+                zaehlen.dequeue();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (pw != null){
+                pw.flush();
+                pw.close();
+            }
         }
 
         try {
-            FileWriter writer4 = new FileWriter(b4save);
-
+            pw = new PrintWriter(new BufferedWriter(new FileWriter("saves/box4.txt")));
             while(!box4.isEmpty()) {
-                writer4.write(box4.front().getFrage() + "\n");
-                writer4.write(box4.front().getAntwort() + "\n");
+                pw.println(box4.front().getFrage());
+                pw.println(box4.front().getAntwort());
+
+                zaehlen.enqueue(box4.front());
                 box4.dequeue();
             }
 
-        } catch(IOException e) {
-            e.printStackTrace();
+            while(!zaehlen.isEmpty()) {
+                box4.enqueue(zaehlen.front());
+                zaehlen.dequeue();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (pw != null){
+                pw.flush();
+                pw.close();
+            }
         }
 
         try {
-            FileWriter writer5 = new FileWriter(arSave);
+            pw = new PrintWriter(new BufferedWriter(new FileWriter("saves/archiv.txt")));
+            while(!archiv.isEmpty()) {
+                pw.println(archiv.top().getFrage());
+                pw.println(archiv.top().getAntwort());
 
-            while(!box1.isEmpty()) {
-                writer5.write(archiv.top().getFrage() + "\n");
-                writer5.write(archiv.top().getAntwort() + "\n");
+                zaehlenStack.push(archiv.top());
                 archiv.pop();
             }
 
-        } catch(IOException e) {
-            e.printStackTrace();
+            while(!zaehlenStack.isEmpty()) {
+                archiv.push(zaehlenStack.top());
+                zaehlenStack.pop();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (pw != null){
+                pw.flush();
+                pw.close();
+            }
         }
     }
 
     public void load() {
-        File b1save = new File("/saves/box1.txt");
-        File b2save = new File("/saves/box2.txt");
-        File b3save = new File("/saves/box3.txt");
-        File b4save = new File("/saves/box4.txt");
-        File arSave = new File("/saves/archiv.txt");
-        Scanner scanner;
-
+        File file1 = new File("saves/box1.txt");
+        if (!file1.canRead() || !file1.isFile()) {
+            System.exit(0);
+        }
+        BufferedReader in1 = null;
         try {
-            scanner = new Scanner(b1save);
-
-            while(scanner.hasNextLine()) {
-                String frage = scanner.nextLine();
-                String antwort = scanner.nextLine();
+            in1 = new BufferedReader(new FileReader("saves/box1.txt"));
+            String zeile = null;
+            while ((zeile = in1.readLine()) != null) {
+                String frage = zeile;
+                String antwort = in1.readLine();
                 box1.enqueue(new Karte(frage, antwort));
             }
-
-        } catch(FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (in1 != null)
+                try {
+                    in1.close();
+                } catch (IOException e) {
+                }
         }
 
+        File file2 = new File("saves/box2.txt");
+        if (!file2.canRead() || !file2.isFile()) {
+            System.exit(0);
+        }
+        BufferedReader in2 = null;
         try {
-            scanner = new Scanner(b2save);
-
-            while(scanner.hasNextLine()) {
-                String frage = scanner.nextLine();
-                String antwort = scanner.nextLine();
+            in2 = new BufferedReader(new FileReader("saves/box2.txt"));
+            String zeile = null;
+            while ((zeile = in2.readLine()) != null) {
+                String frage = zeile;
+                String antwort = in2.readLine();
                 box2.enqueue(new Karte(frage, antwort));
             }
-
-        } catch(FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (in2 != null)
+                try {
+                    in2.close();
+                } catch (IOException e) {
+                }
         }
 
+        File file3 = new File("saves/box3.txt");
+        if (!file3.canRead() || !file3.isFile()) {
+            System.exit(0);
+        }
+        BufferedReader in3 = null;
         try {
-            scanner = new Scanner(b3save);
-
-            while(scanner.hasNextLine()) {
-                String frage = scanner.nextLine();
-                String antwort = scanner.nextLine();
+            in3 = new BufferedReader(new FileReader("saves/box3.txt"));
+            String zeile = null;
+            while ((zeile = in3.readLine()) != null) {
+                String frage = zeile;
+                String antwort = in3.readLine();
                 box3.enqueue(new Karte(frage, antwort));
             }
-
-        } catch(FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (in3 != null)
+                try {
+                    in3.close();
+                } catch (IOException e) {
+                }
         }
 
+        File file4 = new File("saves/box4.txt");
+        if (!file4.canRead() || !file4.isFile()) {
+            System.exit(0);
+        }
+        BufferedReader in4 = null;
         try {
-            scanner = new Scanner(b4save);
-
-            while(scanner.hasNextLine()) {
-                String frage = scanner.nextLine();
-                String antwort = scanner.nextLine();
+            in4 = new BufferedReader(new FileReader("saves/box4.txt"));
+            String zeile = null;
+            while ((zeile = in4.readLine()) != null) {
+                String frage = zeile;
+                String antwort = in4.readLine();
                 box4.enqueue(new Karte(frage, antwort));
             }
-
-        } catch(FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (in4 != null)
+                try {
+                    in4.close();
+                } catch (IOException e) {
+                }
         }
 
+        File file5 = new File("saves/archiv.txt");
+        if (!file5.canRead() || !file5.isFile()) {
+            System.exit(0);
+        }
+        BufferedReader in5 = null;
         try {
-            scanner = new Scanner(arSave);
-
-            while(scanner.hasNextLine()) {
-                String frage = scanner.nextLine();
-                String antwort = scanner.nextLine();
+            in5 = new BufferedReader(new FileReader("saves/archiv.txt"));
+            String zeile = null;
+            while ((zeile = in5.readLine()) != null) {
+                String frage = zeile;
+                String antwort = in5.readLine();
                 archiv.push(new Karte(frage, antwort));
             }
-
-        } catch(FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (in5 != null)
+                try {
+                    in5.close();
+                } catch (IOException e) {
+                }
         }
     }
 
@@ -301,7 +391,6 @@ public class Karteikasten
 
         } else {zaehler4 = 0;}
 
-
         int wantedZaehler = 0;
         switch(pBoxnummer) {
             case(1): wantedZaehler = zaehler1; break;
@@ -326,7 +415,7 @@ public class Karteikasten
 
             archiv.push(zaehlenStack.top());
             zaehlenStack.pop();
-            
+
             i += 1;
         }
     }
@@ -346,6 +435,9 @@ public class Karteikasten
         private JLabel jLabel4 = new JLabel();
         private JLabel jLabel5 = new JLabel();
         private JLabel jLabel6 = new JLabel();
+
+        private JButton jButton6 = new JButton();
+        private JButton jButton7 = new JButton();
 
         // Ende Attribute
 
@@ -436,6 +528,25 @@ public class Karteikasten
             jLabel6.setText("" + length(4));
             cp.add(jLabel6);
 
+            jButton6.setBounds(10, 10, 75, 25);
+            jButton6.setText("speichern");
+            jButton6.setMargin(new Insets(2, 2, 2, 2));
+            jButton6.addActionListener(new ActionListener() { 
+                    public void actionPerformed(ActionEvent evt) { 
+                        jButton6_ActionPerformed(evt);
+                    }
+                });
+            cp.add(jButton6);
+
+            jButton7.setBounds(90, 10, 75, 25);
+            jButton7.setText("laden");
+            jButton7.setMargin(new Insets(2, 2, 2, 2));
+            jButton7.addActionListener(new ActionListener() { 
+                    public void actionPerformed(ActionEvent evt) { 
+                        jButton7_ActionPerformed(evt);
+                    }
+                });
+            cp.add(jButton7);
             // Ende Komponenten
 
             setVisible(true);
@@ -467,6 +578,15 @@ public class Karteikasten
             archivAusgeben();
         } // end of jButton5_ActionPerformed
 
+        public void jButton6_ActionPerformed(ActionEvent evt) {
+            save();
+        }
+
+        public void jButton7_ActionPerformed(ActionEvent evt) {
+            load();
+            new KastenGUI();
+            setVisible(false);
+        }
         // Ende Methoden
     } // end of class KastenGUI
     public class BoxGUI extends JFrame {
