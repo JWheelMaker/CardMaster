@@ -1,6 +1,6 @@
 /**
- * @RE Enterprise Inc.
- * @a0.1
+ * @Ernsting & Rademacher Enterprise Inc.
+ * @1.0
  */
 public class Karte
 {

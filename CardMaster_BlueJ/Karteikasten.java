@@ -11,6 +11,13 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+/**
+ * @Ernsting & Rademacher Enterprise Inc.
+ * @1.0
+ */
 public class Karteikasten
 {
     private Queue <Karte> box1 = new Queue();
@@ -160,11 +167,13 @@ public class Karteikasten
 
     public void load() {
         File file1 = new File("saves/box1.txt");
-        if (!file1.canRead() || !file1.isFile()) {
-            System.exit(0);
-        }
         BufferedReader in1 = null;
         try {
+            if (!file1.canRead() || !file1.isFile()) {
+                Path source = Paths.get("emptyFiles/box1.txt");
+                Path destination = Paths.get("saves/box1.txt");
+                Files.copy(source, destination);
+            }
             in1 = new BufferedReader(new FileReader("saves/box1.txt"));
             String zeile = null;
             while ((zeile = in1.readLine()) != null) {
@@ -183,11 +192,13 @@ public class Karteikasten
         }
 
         File file2 = new File("saves/box2.txt");
-        if (!file2.canRead() || !file2.isFile()) {
-            System.exit(0);
-        }
         BufferedReader in2 = null;
         try {
+            if (!file2.canRead() || !file2.isFile()) {
+                Path source = Paths.get("emptyFiles/box2.txt");
+                Path destination = Paths.get("saves/box2.txt");
+                Files.copy(source, destination);
+            }
             in2 = new BufferedReader(new FileReader("saves/box2.txt"));
             String zeile = null;
             while ((zeile = in2.readLine()) != null) {
@@ -206,11 +217,13 @@ public class Karteikasten
         }
 
         File file3 = new File("saves/box3.txt");
-        if (!file3.canRead() || !file3.isFile()) {
-            System.exit(0);
-        }
         BufferedReader in3 = null;
         try {
+            if (!file3.canRead() || !file3.isFile()) {
+                Path source = Paths.get("emptyFiles/box3.txt");
+                Path destination = Paths.get("saves/box3.txt");
+                Files.copy(source, destination);
+            }
             in3 = new BufferedReader(new FileReader("saves/box3.txt"));
             String zeile = null;
             while ((zeile = in3.readLine()) != null) {
@@ -229,11 +242,13 @@ public class Karteikasten
         }
 
         File file4 = new File("saves/box4.txt");
-        if (!file4.canRead() || !file4.isFile()) {
-            System.exit(0);
-        }
         BufferedReader in4 = null;
         try {
+            if (!file4.canRead() || !file4.isFile()) {
+                Path source = Paths.get("emptyFiles/box4.txt");
+                Path destination = Paths.get("saves/box4.txt");
+                Files.copy(source, destination);
+            }
             in4 = new BufferedReader(new FileReader("saves/box4.txt"));
             String zeile = null;
             while ((zeile = in4.readLine()) != null) {
@@ -252,11 +267,13 @@ public class Karteikasten
         }
 
         File file5 = new File("saves/archiv.txt");
-        if (!file5.canRead() || !file5.isFile()) {
-            System.exit(0);
-        }
         BufferedReader in5 = null;
         try {
+            if (!file5.canRead() || !file5.isFile()) {
+                Path source = Paths.get("emptyFiles/archiv.txt");
+                Path destination = Paths.get("saves/archiv.txt");
+                Files.copy(source, destination);
+            }
             in5 = new BufferedReader(new FileReader("saves/archiv.txt"));
             String zeile = null;
             while ((zeile = in5.readLine()) != null) {
@@ -745,6 +762,7 @@ public class Karteikasten
                 else {jLabel10.setText("Box " + boxnummer + " ist leer!"); } break;
             }
             jTextField3.setText("");
+            jButton3_ActionPerformed(evt);
         } // end of jButton2_ActionPerformed
 
         public void jButton3_ActionPerformed(ActionEvent evt) {
